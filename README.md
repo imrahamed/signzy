@@ -1,6 +1,12 @@
 # Signzy
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.6.
+Demo url: http://halting-slope.surge.sh/
+Demo Video: https://www.loom.com/share/a67798fa2f754752bfe6dfda94f3514b
+
+#Installation Instructions
+
+Clone the repo.
+Do Npm Intsall
 
 ## Development server
 

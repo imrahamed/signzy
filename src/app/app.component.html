@@ -1,21 +1,244 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<nz-layout>
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzBreakpoint]="'lg'" [nzCollapsedWidth]="0" [nzZeroTrigger]="zeroTrigger">
+    <div class="logo">
+      <img src="https://raw.githubusercontent.com/lord/img/master/logo-slate.png" alt="">
+    </div>
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+      <li nz-menu-item (click)="scroll(intro)">
+        Introduction
+      </li>
+      <li nz-menu-item (click)="scroll(auth)">
+        Authentication
+      </li>
+      <li nz-submenu>
+        <span title><span class="nav-text">Kittens</span></span>
+        <ul>
+          <li nz-menu-item (click)="scroll(getallkitten)"> Get All Kittens</li>
+          <li nz-menu-item (click)="scroll(getkitten)">Get a Specific Kitten</li>
+          <li nz-menu-item (click)="scroll(deletekitten)">
+              Delete a Specific Kitten
+            </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-content>
+      <div class="content" style="background: #F3F7F9;; min-height: 100vh;">
+        <div nz-row #intro>
+          <div nz-col nzMd="24" nzLg="12">
+            <h1>Introduction</h1>
+            <div class="DocContent">
+              Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on
+              various cats, kittens, and breeds in our database. <br> <br>
 
-<router-outlet></router-outlet>
+              We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark
+              area to the right, and you can switch the programming language of the examples with the tabs in the top
+              right. <br> <br>
+
+              This example API documentation page was created with Slate. Feel free to edit it and use it as a base for
+              your own API's documentation.
+            </div>
+          </div>
+          <div nz-col nzMd="24" nzLg="12" class="codeWrapper">
+            <div class="docWrapper">
+              <nz-tabset (nzSelectChange)='tabChanged($event)'>
+                <nz-tab nzTitle="shell">
+
+                </nz-tab>
+                <nz-tab nzTitle="ruby">
+
+                </nz-tab>
+              </nz-tabset>
+            </div>
+          </div>
+
+        </div>
+        <div nz-row #auth>
+          <div nz-col nzMd="24" nzLg="12">
+            <h1>Authentication</h1>
+            <div class="DocContent">
+              Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our developer
+              portal. <br> <br>
+
+              Kittn expects for the API key to be included in all API requests to the server in a header that looks
+              like the following:<br> <br>
+              <p class="badges"><code>
+                  Authorization: meowmeowmeow
+              </code> </p>
+              <nz-alert nzType="info" nzMessage="You must replace meowmeowmeow with your personal API key." nzShowIcon></nz-alert>
+            </div>
+          </div>
+          <div nz-col nzMd="24" nzLg="12" class="codeWrapper">
+            <div class="docWrapper">
+              <div class="codeSection">
+                <p>
+                  {{content[currentLang][0].requestmsg}}
+                </p>
+                <pre *ngIf="content[currentLang][0].request"><code [highlight]="content[currentLang][0].request" ></code></pre>
+                <p>
+                  {{content[currentLang][0].responsemsg}}
+                </p>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div nz-row #getallkitten>
+          <div nz-col nzMd="24" nzLg="12">
+            <h1>Kittens</h1>
+            <h2>Get All Kittens</h2>
+            <div class="DocContent">
+              This endpoint retrieves all kittens.<br> <br>
+
+              <h3>HTTP Request</h3>
+              <p class="badges"><code>
+                    GET http://example.com/api/kittens
+                </code> </p>
+
+              <h4>Query Parameters</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Default</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>include_cats
+                    </td>
+                    <td>false</td>
+                    <td>If set to true, the result will also include cats.</td>
+                  </tr>
+                  <tr>
+                    <td>available</td>
+                    <td>true</td>
+                    <td>If set to false, the result will include kittens that have already been adopted.</td>
+                  </tr>
+                </tbody>
+
+              </table>
+              <nz-alert nzType="success" nzMessage="Remember — a happy kitten is an authenticated kitten!" nzShowIcon></nz-alert>
+            </div>
+          </div>
+          <div nz-col nzMd="24" nzLg="12" class="codeWrapper">
+            <div class="docWrapper">
+              <div class="codeSection">
+                <p>
+                  {{content[currentLang][1].requestmsg}}
+                </p>
+                <pre *ngIf="content[currentLang][1].request"><code [highlight]="content[currentLang][1].request" ></code></pre>
+                <p>
+                  {{content[currentLang][1].responsemsg}}
+                </p>
+                <pre *ngIf="content[currentLang][1].response"><code [highlight]="content[currentLang][1].response" ></code></pre>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div nz-row #getkitten>
+          <div nz-col nzMd="24" nzLg="12">
+            <h2>Get a Specific Kitten</h2>
+            <div class="DocContent">
+              This endpoint retrieves a specific kitten.<br> <br>
+
+              <nz-alert nzType="warning" nzMessage="Inside HTML code blocks like this one, you can't use Markdown, so use code blocks to denote code."
+                nzShowIcon></nz-alert>
+              <br> <br>
+              <h3>HTTP Request</h3>
+              <p class="badges"><code>
+                    GET http://example.com/kittens/:ID
+                  </code> </p>
+
+              <h4>URL Parameters</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ID
+                    </td>
+                    <td>The ID of the kitten to retrieve</td>
+                  </tr>
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+          <div nz-col nzMd="24" nzLg="12" class="codeWrapper">
+            <div class="docWrapper">
+              <div class="codeSection">
+                <p>
+                  {{content[currentLang][2].requestmsg}}
+                </p>
+                <pre *ngIf="content[currentLang][2].request"><code [highlight]="content[currentLang][2].request" ></code></pre>
+                <p>
+                  {{content[currentLang][2].responsemsg}}
+                </p>
+                <pre *ngIf="content[currentLang][2].response"><code [highlight]="content[currentLang][2].response" ></code></pre>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div nz-row #deletekitten>
+            <div nz-col nzMd="24" nzLg="12">
+              <h2>Delete a Specific Kitten</h2>
+              <div class="DocContent">
+                  This endpoint deletes a specific kitten.<br> <br>
+                <h3>HTTP Request</h3>
+                <p class="badges"><code>
+                    DELETE http://example.com/kittens/:ID
+                    </code> </p>
+  
+                <h4>URL Parameters</h4>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Parameter</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>ID
+                      </td>
+                      <td>The ID of the kitten to delete</td>
+                    </tr>
+                  </tbody>
+  
+                </table>
+              </div>
+            </div>
+            <div nz-col nzMd="24" nzLg="12" class="codeWrapper">
+              <div class="docWrapper">
+                <div class="codeSection">
+                  <p>
+                    {{content[currentLang][2].requestmsg}}
+                  </p>
+                  <pre *ngIf="content[currentLang][2].request"><code [highlight]="content[currentLang][2].request" ></code></pre>
+                  <p>
+                    {{content[currentLang][2].responsemsg}}
+                  </p>
+                  <pre *ngIf="content[currentLang][2].response"><code [highlight]="content[currentLang][2].response" ></code></pre>
+  
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </nz-content>
+    <nz-footer style="text-align: center;">Ant Design ©2019 Implement By Angular</nz-footer>
+  </nz-layout>
+</nz-layout>
+<ng-template #zeroTrigger>
+  <i nz-icon type="menu-fold" theme="outline"></i>
+</ng-template>
